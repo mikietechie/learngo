@@ -1,0 +1,21 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    expose:
+      - 8000
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_ADDRESS=cache:6379
+    depends_on:
+      - cache
+  
+  cache:
+    restart: unless-stopped
+    image: redis:7.0.5-alpine 
+    expose:
+      - 6379
+    ports:
+      - "6379:6379"
